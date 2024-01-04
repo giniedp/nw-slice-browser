@@ -13,8 +13,10 @@ export function activate(context: vscode.ExtensionContext) {
     )
   );
 
-  vscode.languages.registerHoverProvider(`json`, new NwHoverProvider());
-  vscode.languages.registerHoverProvider(`xml`, new NwHoverProvider());
+  vscode.languages.registerHoverProvider(
+    [{ scheme: "file", pattern: "**/*.*" }],
+    new NwHoverProvider()
+  );
 }
 class NwHoverProvider implements vscode.HoverProvider {
   provideHover(
@@ -25,17 +27,20 @@ class NwHoverProvider implements vscode.HoverProvider {
     const settings = vscode.workspace.getConfiguration("nw-slice-browser");
     const rootDirs = settings.get<string>("lookupDir")?.split(";") || [];
     const word = document.getText(
-      document.getWordRangeAtPosition(position, /[\w\.\/\\]+/)
+      document.getWordRangeAtPosition(position, /[\w\:\-\.\/\\]+/)
     );
 
-    console.log(rootDirs, word);
-    const files = rootDirs
-      .map(
-        (rootDir) =>
-          findFile(rootDir, word) ||
-          findFile(path.join(rootDir, "slices"), word)
+    const files = Array.from(
+      new Set(
+        rootDirs
+          .map(
+            (rootDir) =>
+              findFile(rootDir, word) ||
+              findFile(path.join(rootDir, "slices"), word)
+          )
+          .filter((uri) => !!uri)
       )
-      .filter((uri) => !!uri);
+    );
     if (!files.length) {
       return null;
     }
@@ -58,6 +63,9 @@ class NwHoverProvider implements vscode.HoverProvider {
   }
 }
 function findFile(rootDir: string, fileName: string) {
+  if (path.isAbsolute(fileName) && fs.existsSync(fileName)) {
+    return fileName;
+  }
   let file = path.join(rootDir, fileName);
   if (fs.existsSync(file)) {
     return file;

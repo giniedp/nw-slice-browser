@@ -2,7 +2,7 @@
   "name": "nw-slice-browser",
   "displayName": "nw-slice-browser",
   "description": "Adds navigation links to new world dynamic slices",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "homepage": "https://github.com/giniedp/nw-slice-browser",
   "repository": "https://github.com/giniedp/nw-slice-browser",
@@ -15,7 +15,8 @@
   ],
   "activationEvents": [
     "onLanguage:json",
-    "onLanguage:xml"
+    "onLanguage:xml",
+    "onLanguage:txt"
   ],
   "main": "./dist/extension.js",
   "contributes": {
