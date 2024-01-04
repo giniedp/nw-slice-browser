@@ -2,10 +2,11 @@
   "name": "nw-slice-browser",
   "displayName": "nw-slice-browser",
   "description": "Adds navigation links to new world dynamic slices",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "homepage": "https://github.com/giniedp/nw-slice-browser",
   "repository": "https://github.com/giniedp/nw-slice-browser",
+  "publisher": "ginie",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -13,7 +14,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:json"
+    "onLanguage:json",
+    "onLanguage:xml"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -38,7 +40,9 @@
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "vsce:package": "pnpm vsce package --no-dependencies",
+    "vsce:publish": "pnpm vsce publish --no-dependencies"
   },
   "devDependencies": {
     "@types/vscode": "^1.85.0",
