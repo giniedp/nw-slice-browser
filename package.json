@@ -3,6 +3,9 @@
   "displayName": "nw-slice-browser",
   "description": "Adds navigation links to new world dynamic slices",
   "version": "0.0.1",
+  "license": "MIT",
+  "homepage": "https://github.com/giniedp/nw-slice-browser",
+  "repository": "https://github.com/giniedp/nw-slice-browser",
   "engines": {
     "vscode": "^1.85.0"
   },
